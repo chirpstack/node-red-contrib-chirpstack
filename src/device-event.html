@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    RED.nodes.registerType('device event',{
+        category: 'ChirpStack',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            eventType: {value: "up"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "parser-json.png",
+        label: function() {
+            return (this.name || "device event") + " ["+this.eventType+"]";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="device event">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-eventType"><i class="fa fa-tag"></i> Event Type</label>
+        <select id="node-input-eventType">
+          <option value="up">Uplink</option>
+          <option value="join">Join</option>
+          <option value="status">Status</option>
+          <option value="ack">Ack (of confirmed downlink)</option>
+          <option value="txack">Tx Ack (of downlink transmission)</option>
+          <option value="errror">Error</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="device event">
+    <p>
+      Node that decodes a device-event payload received by the <strong>mqtt in</strong>
+      node into an object and performs filtering by event type.
+    </p>
+
+    <h3>Details</h3>
+    <p>
+      This node must be used together with the <strong>mqtt in</strong> node. The
+      <strong>mqtt in</strong> node must be configured first to subscribe to the
+      <strong>ChirpStack Application Server</strong> mqtt integration events. As
+      this node will perform the filtering by event type, this means that in most
+      cases the <strong>mqtt in</strong> node must subscribe to <code>application/+/device/+/event/+</code>
+      The MQTT integration marshaler must be configured to <code>json</code>.
+    </p>
+
+    <h3>Input</h3>
+    <p>
+      The following input is expected (which matches the output of the <strong>mqtt in</strong>
+      node).
+    </p>
+    <dl class="message-properties">
+      <dt>topic <span class="property-type">string</span></dt> 
+      <dd>The MQTT topic on which the event was received.</dd>
+      <dt>payload <span class="property-type">string | object</span></dt>
+      <dd>The JSON object or string. In case of a string, it will be automatically converted to an object by this node</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <p>
+      This node will only output events matching the selected event type. For
+      convenience, identifiers (EUIs, DevAddr and UUID values) are converted to
+      a printable format. In case an uplink event contains an <code>objectJSON</code>
+      value (string), then this JSON string is converted to an object.
+    </p>
+    <dl class="message-properties">
+      <dt>payload <span class="property-type">object</span></dt>
+      <dd>The event payload as object.</dd>
+    </dl>
+</script>

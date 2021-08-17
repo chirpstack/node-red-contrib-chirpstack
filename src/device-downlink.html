@@ -1,0 +1,76 @@
+<script type="text/javascript">
+    RED.nodes.registerType('device downlink',{
+        category: 'ChirpStack',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            server: {value: ""},
+            useTls: {value: false},
+            apiToken: {value: ""},
+            encoding: {value: "hex"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name || "device downlink";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="device downlink">
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+        <input type="text" id="node-input-server" placeholder="hostname:port, e.g. localhost:8080 or example.com:443">
+    </div>
+    <div class="form-row">
+        <label for="node-input-useTls"><i class="fa fa-lock"></i> Use TLS</label>
+        <input type="checkbox" id="node-input-useTls">
+    </div>
+    <div class="form-row">
+        <label for="node-input-apiToken"><i class="fa fa-key"></i> API Token</label>
+        <input type="password" id="node-input-apiToken" placeholder="API Token">
+    </div>
+    <div class="form-row">
+        <label for="node-input-encoding"><i class="fa fa-file-code-o"></i> Payload Encoding</label>
+        <select id="node-input-encoding">
+          <option value="hex">HEX</option>
+          <option value="base64">Base64</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="device downlink">
+    <p>
+      Node that enqueues a device downlink payload for the given <code>devEUI</code>.
+    </p>
+
+    <h3>Details</h3>
+    <p>
+      This node enqueues the input payload using the ChirpStack Application Server gRPC API.
+      This requires access to the ChirpStack Application Server gRPC endpoint and an API token,
+      which can be retrieved using the ChirpStack Application Server web-interface.
+    </p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+      <dt>devEUI <span class="property-type">string</span></dt>
+      <dd>Device EUI (e.g. <code>0102030405060708</code>).</dd>
+      <dt>fPort <span class="property-type">number</span></dt>
+      <dd>Downlink FPort (must be > 0).</dd>
+      <dt>confirmed <span class="property-type">boolean</span></dt>
+      <dd>If <code>true</code>, the downlink must be confirmed by the device.</dd>
+      <dt>payload <span class="property-type">string</span></dt>
+      <dd>HEX or BASE64 encoded payload (select the encoding in the node settings). If <code>payload</code> is <code>undefined</code>, then an empty downlink will be enqueued.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+      <dt>fCnt <span class="property-type">number</span></dt>
+      <dd>Downlink frame-counter.</dd>
+    </dl>
+</script>

@@ -1,0 +1,5 @@
+# hidden files
+.*
+
+# Node modules
+/node_modules

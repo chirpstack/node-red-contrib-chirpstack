@@ -1,0 +1,17 @@
+{
+ "name": "@chirpstack/node-red-contrib-chirpstack",
+ "description": "ChirpStack Node-RED nodes",
+ "version": "3.0.0",
+ "license": "MIT",
+ "dependencies": {
+  "@chirpstack/chirpstack-api": "^3.11.1",
+  "grpc": "^1.24.11",
+  "uuid": "^8.3.2"
+ },
+ "node-red": {
+  "nodes": {
+   "device-event": "src/device-event.js",
+   "device-downlink": "src/device-downlink.js"
+  }
+ }
+}
