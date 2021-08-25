@@ -2,7 +2,7 @@ module.exports = function(RED) {
   "use strict";
   var device = require("@chirpstack/chirpstack-api/as/external/api/deviceQueue_grpc_pb");
   var device_pb = require("@chirpstack/chirpstack-api/as/external/api/deviceQueue_pb");
-  var grpc = require("grpc");
+  var grpc = require("@grpc/grpc-js");
 
   function DeviceDownlink(config) {
     RED.nodes.createNode(this, config);
