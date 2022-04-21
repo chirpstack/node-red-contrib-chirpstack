@@ -46,19 +46,19 @@
 
 <script type="text/html" data-help-name="device downlink">
     <p>
-      Node that enqueues a device downlink payload for the given <code>devEUI</code>.
+      Node to enqueue a device downlink payload for the given <code>devEui</code>.
     </p>
 
     <h3>Details</h3>
     <p>
-      This node enqueues the input payload using the ChirpStack Application Server gRPC API.
-      This requires access to the ChirpStack Application Server gRPC endpoint and an API token,
-      which can be retrieved using the ChirpStack Application Server web-interface.
+      This node enqueues the input payload using the ChirpStack gRPC API.
+      This requires access to the ChirpStack gRPC endpoint and an API token,
+      which can be retrieved using the ChirpStack web-interface.
     </p>
 
     <h3>Input</h3>
     <dl class="message-properties">
-      <dt>devEUI <span class="property-type">string</span></dt>
+      <dt>devEui <span class="property-type">string</span></dt>
       <dd>Device EUI (e.g. <code>0102030405060708</code>).</dd>
       <dt>fPort <span class="property-type">number</span></dt>
       <dd>Downlink FPort (must be > 0).</dd>
@@ -70,7 +70,7 @@
 
     <h3>Output</h3>
     <dl class="message-properties">
-      <dt>fCnt <span class="property-type">number</span></dt>
-      <dd>Downlink frame-counter.</dd>
+      <dt>id <span class="property-type">string</span></dt>
+      <dd>Downlink ID.</dd>
     </dl>
 </script>

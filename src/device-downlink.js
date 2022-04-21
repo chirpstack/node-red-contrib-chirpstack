@@ -1,7 +1,7 @@
 module.exports = function(RED) {
   "use strict";
-  var device = require("@chirpstack/chirpstack-api/as/external/api/deviceQueue_grpc_pb");
-  var device_pb = require("@chirpstack/chirpstack-api/as/external/api/deviceQueue_pb");
+  var device = require("@chirpstack/chirpstack-api/api/device_grpc_pb");
+  var device_pb = require("@chirpstack/chirpstack-api/api/device_pb");
   var grpc = require("@grpc/grpc-js");
 
   function DeviceDownlink(config) {
@@ -10,14 +10,14 @@ module.exports = function(RED) {
     var client = null;
 
     if (config.useTls) {
-      client = new device.DeviceQueueServiceClient(config.server, grpc.credentials.createSsl());
+      client = new device.DeviceServiceClient(config.server, grpc.credentials.createSsl());
     } else {
-      client = new device.DeviceQueueServiceClient("localhost:8080", grpc.credentials.createInsecure());
+      client = new device.DeviceServiceClient(config.server, grpc.credentials.createInsecure());
     }
 
 
     var meta = new grpc.Metadata();
-    meta.add('authorization', config.apiToken);
+    meta.add('authorization', 'Bearer ' + config.apiToken);
 
 
     node.on("input", function(msg) {
@@ -25,11 +25,11 @@ module.exports = function(RED) {
       var item = new device_pb.DeviceQueueItem();
       var req = new device_pb.EnqueueDeviceQueueItemRequest();
 
-      if (msg.devEUI === undefined) {
-        node.error("devEUI is undefined");
+      if (msg.devEui === undefined) {
+        node.error("devEui is undefined");
         return;
       } else {
-        item.setDevEui(msg.devEUI);
+        item.setDevEui(msg.devEui);
       }
 
       if (msg.fPort === undefined) {
@@ -52,7 +52,7 @@ module.exports = function(RED) {
         node.log("payload is undefined, assuming empty downlink frame");
       }
 
-      req.setDeviceQueueItem(item);
+      req.setItem(item);
       client.enqueue(req, meta, function(err, resp) {
         if (err !== null) {
           node.error("Enqueue error: ", err);
@@ -60,7 +60,7 @@ module.exports = function(RED) {
           node.log("Downlink enqueued");
 
           node.send({
-            fCnt: resp.getFCnt()
+            id: resp.getId()
           });
         }
       });
