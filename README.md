@@ -65,7 +65,7 @@ return {
     "payload": msg.payload.data,
     "fPort": msg.payload.fCnt,
     "confirmed": false,
-    "devEUI": msg.payload.devEUI
+    "devEui": msg.payload.deviceInfo.devEui
 };
 ```
 
