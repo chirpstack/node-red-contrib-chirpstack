@@ -52,7 +52,7 @@ module.exports = function(RED) {
         node.log("payload is undefined, assuming empty downlink frame");
       }
 
-      req.setItem(item);
+      req.setQueueItem(item);
       client.enqueue(req, meta, function(err, resp) {
         if (err !== null) {
           node.error("Enqueue error: ", err);
