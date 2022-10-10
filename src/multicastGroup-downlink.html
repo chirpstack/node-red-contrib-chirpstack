@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('multicast group downlink',{
+        category: 'ChirpStack',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            server: {value: ""},
+            useTls: {value: false},
+            apiToken: {value: ""},
+            encoding: {value: "hex"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name || "multicast group downlink";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="multicast group downlink">
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+        <input type="text" id="node-input-server" placeholder="hostname:port, e.g. localhost:8080 or example.com:443">
+    </div>
+    <div class="form-row">
+        <label for="node-input-useTls"><i class="fa fa-lock"></i> Use TLS</label>
+        <input type="checkbox" id="node-input-useTls">
+    </div>
+    <div class="form-row">
+        <label for="node-input-apiToken"><i class="fa fa-key"></i> API Token</label>
+        <input type="password" id="node-input-apiToken" placeholder="API Token">
+    </div>
+    <div class="form-row">
+        <label for="node-input-encoding"><i class="fa fa-file-code-o"></i> Payload Encoding</label>
+        <select id="node-input-encoding">
+          <option value="hex">HEX</option>
+          <option value="base64">Base64</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="multicast group downlink">
+    <p>
+      Node to enqueue a multicast group downlink payload for the given <code>multicastGroupId</code>.
+    </p>
+
+    <h3>Details</h3>
+    <p>
+      This node enqueues the input payload using the ChirpStack gRPC API.
+      This requires access to the ChirpStack gRPC endpoint and an API token,
+      which can be retrieved using the ChirpStack web-interface.
+    </p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+      <dt>multicastGroupId <span class="property-type">string</span></dt>
+      <dd>Multicast group Id (e.g. <code>81d5545f-973f-4c45-87f2-f917d509581d</code>).</dd>
+      <dt>fPort <span class="property-type">number</span></dt>
+      <dd>Downlink FPort.</dd>
+      <dt>payload <span class="property-type">string</span></dt>
+      <dd>HEX or BASE64 encoded payload (select the encoding in the node settings). If <code>payload</code> is <code>undefined</code>, then an empty downlink will be enqueued.</dd>
+    </dl>
+
+    <h3>Output</h3>
+    <dl class="message-properties">
+      <dt>fCnt <span class="property-type">string</span></dt>
+      <dd>Frame counter.</dd>
+    </dl>
+</script>
