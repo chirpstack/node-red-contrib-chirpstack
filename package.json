@@ -10,7 +10,8 @@
  "node-red": {
   "nodes": {
    "device-event": "src/device-event.js",
-   "device-downlink": "src/device-downlink.js"
+   "device-downlink": "src/device-downlink.js",
+   "multicast-downlink": "src/multicastGroup-downlink.js"
   }
  }
 }
