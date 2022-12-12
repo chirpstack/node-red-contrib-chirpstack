@@ -1,11 +1,11 @@
 {
  "name": "@chirpstack/node-red-contrib-chirpstack",
  "description": "ChirpStack Node-RED nodes",
- "version": "4.0.0",
+ "version": "4.1.0",
  "license": "MIT",
  "dependencies": {
-  "@chirpstack/chirpstack-api": "^4.0.0",
-  "@grpc/grpc-js": "^1.6.7"
+  "@chirpstack/chirpstack-api": "^4.1.0",
+  "@grpc/grpc-js": "^1.8.0"
  },
  "node-red": {
   "nodes": {
